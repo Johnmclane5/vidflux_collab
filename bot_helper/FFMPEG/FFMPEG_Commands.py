@@ -123,6 +123,7 @@ def get_commands(process_status):
             if merge_map:
                 command+=['-map','0']
             if not merge_fix_blank:
+                command+= ["-metadata", f"title=@tgflix"]
                 command+= ["-c", "copy"]
             command+= ['-y', f'{str(output_file)}']
             return command, log_file, input_file, output_file, file_duration
