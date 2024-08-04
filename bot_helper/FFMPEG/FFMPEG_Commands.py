@@ -147,6 +147,7 @@ def get_commands(process_status):
             smap +=1
         command = ['ffmpeg','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}']
         command+= input_sub + sub_map + ['-map','0:v?', '-map',f'{str(process_status.amap_options)}?', '-map','0:s?', '-disposition:s:0','default']
+        command+= ["-metadata", f"title=REPACKED BY @thetgflix"]
         if softmux_encode:
                 encoder = get_data()[process_status.user_id]['softmux']['encoder']
                 if softmux_use_crf:
