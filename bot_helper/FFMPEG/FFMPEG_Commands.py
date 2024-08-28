@@ -123,7 +123,10 @@ def get_commands(process_status):
             if merge_map:
                 command+=['-map','0']
             if not merge_fix_blank:
-                command+= ["-metadata", f"title=REPACKED BY @thetgflix"]
+                command+= ["-metadata", f"title="]
+                command+= ["--metadata:s:a:0", f"title=REPACKED BY @thetgflix"]
+                command+= ["--metadata:s:s:0", f"title=REPACKED BY @thetgflix"]
+
                 command+= ["-c", "copy"]
             command+= ['-y', f'{str(output_file)}']
             return command, log_file, input_file, output_file, file_duration
@@ -147,7 +150,8 @@ def get_commands(process_status):
             smap +=1
         command = ['ffmpeg','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}']
         command+= input_sub + sub_map + ['-map','0:v?', '-map',f'{str(process_status.amap_options)}?', '-map','0:s?', '-disposition:s:0','default']
-        command+= ["-metadata", f"title=REPACKED BY @thetgflix"]
+        command+= ["-metadata:s:s:0", f"title=REPACKED BY @thetgflix"]
+        
         if softmux_encode:
                 encoder = get_data()[process_status.user_id]['softmux']['encoder']
                 if softmux_use_crf:
@@ -301,4 +305,7 @@ def get_commands(process_status):
         file_duration = get_video_duration(input_file)
         command = ['ffmpeg','-hide_banner', '-progress', f"{log_file}", '-i', f'{str(input_file)}', '-map', '0:v?'] + process_status.custom_index
         command += ["-c", "copy", '-y', f"{output_file}"]
+        command+= ["-metadata", f"title={get_output_name(process_status)}"]
+        command+= ["-metadata:s:a:0", f"title=REPACKED BY @thetgflix"]
+        
         return command, log_file, input_file, output_file, file_duration
