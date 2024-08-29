@@ -163,8 +163,7 @@ def get_commands(process_status):
                                 command += ['-vcodec','libx265', '-vtag', 'hvc1', '-preset', softmux_preset]
                         else:
                                 command += ['-vcodec','libx264', '-preset', softmux_preset]
-        else:   
-                command+= ["-metadata:s:s:0", f"title=REPACKED BY @thetgflix"]
+        else:
                 command += ['-c','copy']
         
         command += ["-c:s", f"{get_data()[process_status.user_id]['softmux']['sub_codec']}", "-y", f"{output_file}"]
